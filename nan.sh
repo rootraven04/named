@@ -48,7 +48,7 @@ _INSTALLWP() {
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 	#	Creating config file
-	php wp-cli.phar core config --dbhost="${dbhost}" --dbname="${dbname}" --dbuser="${dbuser}" --dbpass="${dbpass}" $extra
+	php wp-cli.phar core config --dbhost="${dbhost}" --dbname="${dbname}" --dbuser="${dbuser}" --dbpass="${dbpass}" --dbprefix="${dbprefix}" $extra
 	php wp-cli.phar core install --url="${url}" --title="${title}" --admin_user="${username}" --admin_email="${email}" $extra
 	php wp-cli.phar user list $extra
 
@@ -56,12 +56,12 @@ _INSTALLWP() {
 	echo -e "[+] password: ${password}"
 
 	echo -e "[+] ========================================= [+]"
-	echo -e "     Changing Permalinks..."
+	echo -e "[~] Changing Permalinks..."
 	php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '%postname%' WHERE option_name = 'permalink_structure'" $extra
 	php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
-	echo -e "     Installing Plugin..."
+	echo -e "[~] Installing Plugin..."
 	php wp-cli.phar plugin install ${source_campaign} --activate $extra
-	php wp-cli.phar cron event list $extra
+	#php wp-cli.phar cron event list $extra
 
 
 	#	ENTERING KEYWORD

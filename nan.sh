@@ -128,6 +128,14 @@ _CAMPAIGNCHECK() {
 		# php wp-cli.phar cron event list | grep wp_rest_api_team_cron_check | awk '{print "[+]",$0}'
 	echo -e "${blue}[~]${norm} Dumping wp_api_settings table."
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)wp_api_settings" $extra
+	echo -e "${blue}[~]${norm} Dumping Casino post."
+		php wp-cli.phar post list --post_type=casino | head -4 | awk '{print "\033[1;32m[+]\033[0m", $0}' $extra
+	echo -e "${blue}[~]${norm} Dumping Exchange post."
+		php wp-cli.phar post list --post_type=exchange | head -4 | awk '{print "\033[1;32m[+]\033[0m", $0}' $extra
+	echo -e "${blue}[~]${norm} Dumping Cricket post."
+		php wp-cli.phar post list --post_type=cricket | head -4 | awk '{print "\033[1;32m[+]\033[0m", $0}' $extra
+	echo -e "${blue}[~]${norm} Repairing post_name."
+		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
 
 }
 

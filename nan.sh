@@ -76,13 +76,30 @@ _INSTALLWP() {
 
 _INSTALLAGC() {
 	username="wp2fa"
+	if [[ $extra == "--allow-root" ]];
+	then
+		echo -ne "${red}[!]${norm} You're currently using 'root access', Please input user owner (e.g:${green} www-data${norm})"
+		read -p $"" owner
+	fi
+
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
 		#php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
 	echo -e "${blue}[~]${norm} Installing Plugin..."
 		php wp-cli.phar plugin install ${source_campaign} --activate $extra
+		
+		if [[ $extra == "--allow-root" ]];
+		then
+			echo -e "${blue}[~]${norm} Changing the owner of the plugin folder."
+			chown -R ${owner}:${owner} ./wp-content/plugins/wordpress-images-optimizers/
+		fi
 		php wp-cli.phar plugin install wordpress-importer --activate $extra
+				if [[ $extra == "--allow-root" ]];
+		then
+			echo -e "${blue}[~]${norm} Changing the owner of the plugin folder."
+			chown -R ${owner}:${owner} ./wp-content/plugins/wordpress-importer/
+		fi
 		wget ${xml_agc} -O agc.xml
 		php wp-cli.phar import agc.xml --authors=create $extra
 		wget ${sql_agc} -O agc.sql
@@ -122,6 +139,8 @@ echo -e "
    ██╔══██╗██╔══╝  ██║██║╚██╗██║██╔══██║    ╚════██║██╔══██║██╔═██╗ ██║
    ██║  ██║███████╗██║██║ ╚████║██║  ██║    ███████║██║  ██║██║  ██╗██║
    ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
+
+   ${red}[!] ${norm}Please run from public_html [wp] if you're using root.
                                                                     
 
 "

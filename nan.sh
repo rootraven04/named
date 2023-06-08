@@ -129,11 +129,11 @@ _CAMPAIGNCHECK() {
 	echo -e "${blue}[~]${norm} Dumping wp_api_settings table."
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)wp_api_settings" $extra
 	echo -e "${blue}[~]${norm} Dumping Casino post."
-		php wp-cli.phar post list --post_type=casino | head -4 | awk '{print "\033[1;32m[+]\033[0m", $0}' $extra
+		php wp-cli.phar post list --post_type=casino --post__in=1,3 $extra
 	echo -e "${blue}[~]${norm} Dumping Exchange post."
-		php wp-cli.phar post list --post_type=exchange | head -4 | awk '{print "\033[1;32m[+]\033[0m", $0}' $extra
+		php wp-cli.phar post list --post_type=exchange --post__in=1,3 $extra
 	echo -e "${blue}[~]${norm} Dumping Cricket post."
-		php wp-cli.phar post list --post_type=cricket | head -4 | awk '{print "\033[1;32m[+]\033[0m", $0}' $extra
+		php wp-cli.phar post list --post_type=cricket --post__in=1,3 $extra
 	echo -e "${blue}[~]${norm} Repairing post_name."
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
 
@@ -145,9 +145,9 @@ echo -ne "${blue}[~]${norm} Checking WP-CLI.phar is supported or not...\r" && sl
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
 then
-	echo -ne "${red}[!] Sorry,${norm} Wp-cli is not supported!                           \r" && exit
+	echo -ne "${red}[!] Sorry,${norm} WP-CLI is not supported!                           \r" && exit
 else
-	echo -ne "${green}[+] Congrats,${norm} Wp-cli is supported!                          \r" && sleep 0.8
+	echo -ne "${green}[+] Congrats,${norm} WP-CLI is supported!                          \r" && sleep 0.8
 fi
 
 rm -rf "wp-cli.phar"

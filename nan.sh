@@ -120,9 +120,9 @@ echo -ne "${blue}[~]${norm} Checking WP-CLI.phar is supported or not...\r" && sl
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
 then
-	echo -e "${red}[!]${norm} Sorry, Wp-cli is not supported!                           " && exit
+	echo -ne "${red}[!]${norm} Sorry, Wp-cli is not supported!                           \r" && exit
 else
-	echo -e "${green}[+]${norm} Congrats, Wp-cli is supported!                          " && sleep 0.8
+	echo -ne "${green}[+]${norm} Congrats, Wp-cli is supported!                          \r" && sleep 0.8
 fi
 
 rm -rf "wp-cli.phar"

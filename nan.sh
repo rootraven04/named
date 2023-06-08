@@ -113,6 +113,8 @@ _INSTALLAGC() {
 		php wp-cli.phar db import agc.sql &2>/dev/null
 		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator
 		echo -e "${green}[+] Username:${norm} ${username}"
+		php wp-cli.phar user list $extra
+		php wp-cli.phar user delete "SangamUni2020" --reassign=1
 }
 
 

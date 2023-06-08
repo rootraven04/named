@@ -99,7 +99,7 @@ _INSTALLAGC() {
 	wget ${xml_agc} -O agc.xml
 	php wp-cli.phar import agc.xml --authors=create
 	wget ${sql_agc} -O agc.sql
-	sed -i -e 's/blogwpx_/$(php wp-cli.phar db prefix $extra)/g' agc.sql
+	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
 	php wp-cli.phar db import agc.sql
 }
 
@@ -149,3 +149,6 @@ rm -rf "agc.xml" && rm -rf "wp-cli.phar"
 #	php wp-cli.phar plugin install wordpress-importer --activate
 #	wget import https://raw.githubusercontent.com/rootraven04/named/main/agc.xml 
 #	php wp-cli.phar import agc.xml --authors=create
+
+
+# php -r "$msgid = "";$oldMessage = 'blogwpx_';$deletedFormat = '$(php wp-cli.phar db prefix $extra)';$str=file_get_contents('agc.sql');$str=str_replace($oldMessage, $deletedFormat,$str);file_put_contents('agc.sql', $str);"

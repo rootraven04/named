@@ -1,8 +1,12 @@
 #!/bin/bash 
 # Reina Akiara v.0.1
 
+
+
+
 _INSTALLWP() {
 	owner=$(echo -e "$(pwd)" | cut -d "/" -f3)
+	source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
 
 	if [[ $(id | grep "root" ) ]]; then extra="--allow-root"; else extra=""; fi
 
@@ -33,9 +37,10 @@ _INSTALLWP() {
 	read -p $" [+] URL [e.g:example.com]     : " url
 	read -p $" [+] TITLE                     : " title
 	read -p $" [+] ADMIN USERNAME            : " username
-	#read -p $" [+] ADMIN PASSWORD            : " password
+	read -p $" [+] ADMIN PASSWORD            : " password
 	read -p $" [+] ADMIN EMAIL               : " email
 
+	echo -e ""
 	echo -e "[~] Downloading Wordpress"
 	wget -q https://wordpress.org/latest.zip && unzip -q "latest.zip" && mv "wordpress" ${dir} && cd ${dir}
 	
@@ -46,6 +51,31 @@ _INSTALLWP() {
 	php wp-cli.phar core config --dbhost="${dbhost}" --dbname="${dbname}" --dbuser="${dbuser}" --dbpass="${dbpass}" $extra
 	php wp-cli.phar core install --url="${url}" --title="${title}" --admin_user="${username}" --admin_email="${email}" $extra
 	php wp-cli.phar user list $extra
+
+	php wp-cli.phar user update 1 --user_pass="${password}" $extra
+	echo -e "[+] password: ${password}"
+
+	echo -e "[+] ========================================= [+]"
+	echo -e "     Changing Permalinks..."
+	php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '%postname%' WHERE option_name = 'permalink_structure'" $extra
+	php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
+	echo -e "     Installing Plugin..."
+	php wp-cli.phar plugin install ${source_campaign} --activate $extra
+	php wp-cli.phar cron event list $extra
+
+
+	#	ENTERING KEYWORD
+	php wp-cli.phar db query "DROP TABLE IF EXISTS $(php wp-cli.phar db prefix $extra)wp_api_keys" $extra
+
+	#	CREATING wp_api_keys TABLE
+	echo -e "[~] CREATING wp_api_keys TABLE"
+
+	php wp-cli.phar db query "CREATE TABLE $(php wp-cli.phar db prefix $extra)wp_api_keys ( id int(11) NOT NULL AUTO_INCREMENT,idmd5 varchar(50) CHARACTER SET latin1 NOT NULL,title text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,slug text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,category varchar(10) COLLATE utf8mb4_unicode_520_ci NOT NULL,target_uv varchar(10) COLLATE utf8mb4_unicode_520_ci NOT NULL,status varchar(10) COLLATE utf8mb4_unicode_520_ci NOT NULL, PRIMARY KEY (id),  UNIQUE KEY idmd5 (idmd5)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci" $extra
+	
+	#	CREATING wp_api_keys TABLE
+	#echo -e "[~] CREATING wp_api_keys TABLE"
+
+	#php wp-cli.phar db query "INSERT INTO $(php wp-cli.phar db prefix $extra)wp_api_keys ( id , idmd5 , title , slug , category , target_uv , status ) VALUES ( 1 , "
 
 
 	# 	wp core config --dbhost=host.db --dbname=prefix_db --dbuser=username --dbpass=password
@@ -73,3 +103,7 @@ elif [[ $option == "0" ]];
 else
 	echo -e "sams"
 fi
+
+
+
+#	php wp-cli.phar db query "UPDATE wp_options SET option_value = '%postname%' WHERE option_name = 'permalink_structure'"

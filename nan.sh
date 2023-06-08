@@ -15,9 +15,11 @@ _INSTALLWP() {
 		echo -e "[+] wp-cli supported!"
 	fi
 
+	rm -rf "wp-cli.phar"
+
 	echo -e ""
 	#	----	VAR		----
-	echo -e "[STEP 1]==================================="
+	echo -e "[+][STEP 1]==================================="
 	echo ""
 	read -p $" [+] Directory name: " dir
 	read -p $" [+] DB HOST       : " dbhost
@@ -26,7 +28,7 @@ _INSTALLWP() {
 	read -p $" [+] DB PASSWORD   : " dbpass
 	read -p $" [+] DB PREFIX     : " dbprefix
 	echo ""
-	echo -e "[STEP 2]==================================="
+	echo -e "[+][STEP 2]==================================="
 	echo ""
 	read -p $" [+] URL [e.g:example.com]     : " url
 	read -p $" [+] TITLE                     : " title
@@ -43,6 +45,7 @@ _INSTALLWP() {
 	#	Creating config file
 	php wp-cli.phar core config --dbhost="${dbhost}" --dbname="${dbname}" --dbuser="${dbuser}" --dbpass="${dbpass}" $extra
 	php wp-cli.phar core install --url="${url}" --title="${title}" --admin_user="${username}" --admin_email="${email}" $extra
+	php wp-cli.phar user list $extra
 
 
 	# 	wp core config --dbhost=host.db --dbname=prefix_db --dbuser=username --dbpass=password

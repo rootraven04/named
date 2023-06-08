@@ -99,22 +99,23 @@ _INSTALLAGC() {
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 	echo -e "${blue}[~]${norm} Changing Permalinks..."
-		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'"
-		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'"
+		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
+		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
 	echo -e "${blue}[~]${norm} Installing Plugin..."
-		php wp-cli.phar plugin install ${source_campaign} --activate
+		php wp-cli.phar plugin install ${source_campaign} --activate $extra
 	#php wp-cli.phar cron event list $extra
 
-		php wp-cli.phar plugin install wordpress-importer --activate
+		php wp-cli.phar plugin install wordpress-importer --activate $extra
 		wget ${xml_agc} -O agc.xml
-		php wp-cli.phar import agc.xml --authors=create &2>/dev/null
+		php wp-cli.phar import agc.xml --authors=create $extra
 		wget ${sql_agc} -O agc.sql
 		sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
-		php wp-cli.phar db import agc.sql &2>/dev/null
-		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator
+		php wp-cli.phar db import agc.sql $extra
+		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator $extra
 		echo -e "${green}[+] Username:${norm} ${username}"
 		php wp-cli.phar user list $extra
-		php wp-cli.phar user delete "SangamUni2020" --reassign=1
+		php wp-cli.phar user delete "SangamUni2020" --reassign=1 $extra
+		php wp-cli.phar user list $extra
 }
 
 

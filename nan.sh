@@ -42,7 +42,7 @@ _INSTALLWP() {
 
 	#	Creating config file
 	php wp-cli.phar core config --dbhost="${dbhost}" --dbname="${dbname}" --dbuser="${dbuser}" --dbpass="${dbpass}" $extra
-	php core install --url="${url}" --title="${title}" --admin_user="${username}" --admin_email="${email}" $extra
+	php wp-cli.phar core install --url="${url}" --title="${title}" --admin_user="${username}" --admin_email="${email}" $extra
 
 
 	# 	wp core config --dbhost=host.db --dbname=prefix_db --dbuser=username --dbpass=password

@@ -96,7 +96,6 @@ _INSTALLWP() {
 }
 _INSTALLAGC() {
 	username="wp2fa"
-
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 	echo -e "${blue}[~]${norm} Changing Permalinks..."
@@ -114,7 +113,6 @@ _INSTALLAGC() {
 		php wp-cli.phar db import agc.sql &2>/dev/null
 		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator
 		echo -e "${green}[+] Username:${norm} ${username}"
-		php wp-cli.phar user list $extra
 }
 
 

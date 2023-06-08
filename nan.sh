@@ -56,7 +56,10 @@ _INSTALLWP() {
 	php wp-cli.phar plugin install wordpress-importer --activate $extra
 	wget ${xml_agc} -O agc.xml
 	php wp-cli.phar import agc.xml --authors=create $extra
-
+	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
+	php wp-cli.phar db import agc.sql
+	php wp-cli.phar user create ${username} admin@gmail.com --role=administrator
+	echo -e "[+] Username: ${username}"
 
 
 	#	ENTERING KEYWORD

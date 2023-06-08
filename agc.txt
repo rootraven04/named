@@ -2272,7 +2272,7 @@ INSERT INTO `blogwpx_wp_api_keys` (`id`, `idmd5`, `title`, `slug`, `category`, `
 (2265,	'5336c0b1a',	'best online betting site',	'best-online-betting-site',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
 (2266,	'de7ea397a',	'best betting sites online',	'best-betting-sites-online',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
 (2267,	'bce858c79',	'best online betting',	'best-online-betting',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
-(2268,	'7174cc258',	'cricket odd',	'cricket-odd',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
+(2268,	'7174cc258',	'cricket odd',	'cricket-odd',	'1',	'web',	'1',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
 (2269,	'c2fca7aa9',	'best cricket odds',	'best-cricket-odds',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
 (2270,	'84dcaa496',	'online cricket betting bonuses',	'online-cricket-betting-bonuses',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
 (2271,	'1226457b3',	'best cricket odds sites',	'best-cricket-odds-sites',	'1',	'web',	'0',	'casino',	'en_EN',	'https://7criccasinobonus.com/'),
@@ -14195,4 +14195,23 @@ INSERT INTO `blogwpx_wp_api_keys` (`id`, `idmd5`, `title`, `slug`, `category`, `
 (14489,	'ac48dda1d',	'स्पर्श के नियम में करुणा',	'स-पर-श-क-न-यम-म-कर-ण',	'1',	'web',	'0',	'casino',	'hi',	'https://7criccasinobonus.com/'),
 (14490,	'74f2ca5e2',	'इंडयन रेलवे रूल बुक इन हंद',	'इ-डयन-र-लव-र-ल-ब-क-इन-ह-द',	'1',	'web',	'0',	'casino',	'hi',	'https://7criccasinobonus.com/');
 
--- 2023-06-08 11:39:10
+DROP TABLE IF EXISTS `blogwpx_wp_api_settings`;
+CREATE TABLE `blogwpx_wp_api_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_status` varchar(50) NOT NULL,
+  `end_lang` varchar(10) NOT NULL,
+  `tot_lang` varchar(10) NOT NULL,
+  `word_post` varchar(10) NOT NULL,
+  `status_cron` varchar(10) NOT NULL,
+  `autosave_key` varchar(10) NOT NULL,
+  `char_key` varchar(10) NOT NULL,
+  `time_post` varchar(10) NOT NULL,
+  `competitors_key` varchar(10) NOT NULL,
+  `idkey` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+INSERT INTO `blogwpx_wp_api_settings` (`id`, `post_status`, `end_lang`, `tot_lang`, `word_post`, `status_cron`, `autosave_key`, `char_key`, `time_post`, `competitors_key`, `idkey`) VALUES
+(1,	'publish',	'en_EN',	'4',	'1500',	'on',	'off',	'5',	'60',	'on',	'KONTOLBAPAKKAU');
+
+-- 2023-06-08 12:20:00

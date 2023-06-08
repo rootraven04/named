@@ -60,7 +60,7 @@ _INSTALLWP() {
 	if [[ $extra == "--allow-root" ]];
 	then
 		echo -ne "${red}[!]${norm} You're currently using 'root access', wanna change the owner of${green} ${dir}${norm} to user? (y/n)"
-		read -p $"" owneroption
+		read -p $" : " owneroption
 		if [[ $owneroption == "y" ]] || [[ $owneroption == "Y" ]] || [[ $owneroption == "yes" ]];
 		then
 			read -p $"[+] Owner: " suowner
@@ -79,7 +79,7 @@ _INSTALLAGC() {
 	if [[ $extra == "--allow-root" ]];
 	then
 		echo -ne "${red}[!]${norm} You're currently using 'root access', Please input user owner (e.g:${green} www-data${norm})"
-		read -p $"" owner
+		read -p $" : " owner
 	fi
 
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

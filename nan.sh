@@ -117,7 +117,18 @@ _INSTALLAGC() {
 }
 
 
+_CAMPAIGNCHECK() {
 
+	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+	echo -e "${blue}[~]${norm} Dumping plugin list."
+		php wp-cli.phar plugin list $extra
+	echo -e "${blue}[~]${norm} Dumping wp-cron-event-list."
+		php wp-cli.phar cron event list $extra
+	echo -e "${blue}[~]${norm} Dumping wp_api_settings table."
+		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)wp_api_settings" $extra
+		
+}
 echo -ne "${blue}[~]${norm} Checking WP-CLI.phar is supported or not...\r" && sleep 0.8
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
@@ -150,7 +161,7 @@ echo -e "
 
  ===============================
 "
-read -p $": Select Option : " option
+read -p $" : Select an option >> " option
 
 if [[ $option == "1" ]];
 	then

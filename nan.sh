@@ -49,6 +49,8 @@ _INSTALLWP() {
 	echo -e "[~] Changing Permalinks..."
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
+		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'siteurl'" $extra
+		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'home'" $extra
 	echo -e "[~] Installing Plugin..."
 	php wp-cli.phar plugin install ${source_campaign} --activate $extra
 	#php wp-cli.phar cron event list $extra

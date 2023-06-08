@@ -37,9 +37,11 @@ _INSTALLWP() {
 
 	echo -e ""
 	echo -e "${blue}[~]${norm} Downloading Wordpress"
-	wget -q https://wordpress.org/latest.zip && unzip -q "latest.zip" && rm -rf "latest.zip" && mv "wordpress" ${dir} && cd ${dir}
+	wget -q https://wordpress.org/latest.zip
+	echo -e "${blue}[~]${norm} Inflating Wordpress"
+	unzip -q "latest.zip" && rm -rf "latest.zip" && mv "wordpress" ${dir} && cd ${dir}
 	
-	echo -e "${blue}[~]${norm} Downloading wp-cli.phar..."
+	echo -e "${blue}[~]${norm} Downloading wp-cli.phar"
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 	#	Creating config file
@@ -47,7 +49,7 @@ _INSTALLWP() {
 	php wp-cli.phar core install --url="${url}" --title="${title}" --admin_user="${username}" --admin_email="${email}" $extra
 	php wp-cli.phar user list $extra
 
-	echo -e "${blue}[~]${norm} Updating your default password..."
+	echo -e "${blue}[~]${norm} Updating your default password"
 	php wp-cli.phar user update 1 --user_pass="${password}" $extra
 
 	php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'siteurl'" $extra

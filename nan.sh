@@ -11,17 +11,6 @@ _INSTALLWP() {
 
 	if [[ $(id | grep "root" ) ]]; then extra="--allow-root"; else extra=""; fi
 
-	echo -e "[~] Checking WP-CLI.phar is supported or no"
-	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-	if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
-	then
-		echo -e "[!] wp-cli not supported!" && exit
-	else
-		echo -e "[+] wp-cli supported!"
-	fi
-
-	rm -rf "wp-cli.phar"
-
 	echo -e ""
 	#	----	VAR		----
 	echo -e "[+][STEP 1]==================================="
@@ -102,12 +91,25 @@ _INSTALLAGC() {
 	php wp-cli.phar plugin install ${source_campaign} --activate
 	#php wp-cli.phar cron event list $extra
 
-	php wp-cli.phar plugin install wordpress-importer --activate $extra
+	php wp-cli.phar plugin install wordpress-importer --activate
 	wget ${xml_agc} -O agc.xml
-	php wp-cli.phar import agc.xml --authors=create $extra
+	php wp-cli.phar import agc.xml --authors=create
 }
 
 
+
+
+
+echo -e "[~] Checking WP-CLI.phar is supported or no"
+curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
+then
+	echo -e "[!] wp-cli not supported!" && exit
+else
+	echo -e "[+] wp-cli supported!"
+fi
+
+rm -rf "wp-cli.phar"
 
 echo -e "
 [+] ===============================
@@ -133,7 +135,7 @@ else
 fi
 
 
-rm -rf "wp-cli.phar"
+rm -rf "agc.xml" && rm -rf "wp-cli.phar"
 #	php wp-cli.phar db query "UPDATE wp_options SET option_value = '%postname%' WHERE option_name = 'permalink_structure'"
 
 

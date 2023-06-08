@@ -127,7 +127,7 @@ _CAMPAIGNCHECK() {
 		php wp-cli.phar cron event list $extra
 	echo -e "${blue}[~]${norm} Dumping wp_api_settings table."
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)wp_api_settings" $extra
-		
+
 }
 echo -ne "${blue}[~]${norm} Checking WP-CLI.phar is supported or not...\r" && sleep 0.8
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -169,6 +169,9 @@ if [[ $option == "1" ]];
 elif [[ $option == "2" ]];
 	then
 		_INSTALLAGC
+elif [[ $option == "2" ]];
+	then
+		_CAMPAIGNCHECK
 elif [[ $option == "0" ]];
 	then
 		exit

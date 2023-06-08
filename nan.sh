@@ -43,26 +43,31 @@ _INSTALLWP() {
 	php wp-cli.phar user list $extra
 
 	php wp-cli.phar user update 1 --user_pass="${password}" $extra
-	echo -e "[+] password: ${password}"
 
-	echo -e "[+] ========================================= [+]"
-	echo -e "[~] Changing Permalinks..."
-		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
-		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
-		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'siteurl'" $extra
-		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'home'" $extra
-	echo -e "[~] Installing Plugin..."
-	php wp-cli.phar plugin install ${source_campaign} --activate $extra
+	php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'siteurl'" $extra
+	php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'home'" $extra
+	
+	echo -e "[+] http://${url}/wp-login.php"
+	echo -e "[+] Username: ${user} [+] password: ${password} | Have Fun ntol!"
+
+#
+#	echo -e "[+] ========================================= [+]"
+#	echo -e "[~] Changing Permalinks..."
+#		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
+#		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
+#		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'siteurl'" $extra
+#		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'home'" $extra
+#	echo -e "[~] Installing Plugin..."
+#	php wp-cli.phar plugin install ${source_campaign} --activate $extra
 	#php wp-cli.phar cron event list $extra
 
-	php wp-cli.phar plugin install wordpress-importer --activate $extra
-	wget ${xml_agc} -O agc.xml
-	php wp-cli.phar import agc.xml --authors=create $extra
-	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
-	php wp-cli.phar db import agc.sql
-	php wp-cli.phar user create ${username} admin@gmail.com --role=administrator
-	echo -e "[+] Username: ${username}"
-
+#	php wp-cli.phar plugin install wordpress-importer --activate $extra
+#	wget ${xml_agc} -O agc.xml
+#	php wp-cli.phar import agc.xml --authors=create $extra
+#	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
+#	php wp-cli.phar db import agc.sql
+#	php wp-cli.phar user create ${username} admin@gmail.com --role=administrator
+#	echo -e "[+] Username: ${username}"
 
 	#	ENTERING KEYWORD
 	#php wp-cli.phar db query "DROP TABLE IF EXISTS $(php wp-cli.phar db prefix $extra)wp_api_keys" $extra

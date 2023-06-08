@@ -57,6 +57,19 @@ _INSTALLWP() {
 	
 	echo -e "${green}[+]${norm} http://${url}/wp-login.php"
 	echo -e "${green}[+] Username:${norm} ${username}${green} [+] password:${norm} ${password} | ${green}Have Fun ntol! ${norm}"
+	if [[ $extra == "--allow-root" ]];
+	then
+		echo -ne "${red}[!]${norm} You're currently using 'root access', wanna change the owner of${green} ${dir}${norm} to user? (y/n)"
+		read -p $"" owneroption
+		if [[ $owneroption == "y" ]] || [[ $owneroption == "Y" ]] || [[ $owneroption == "yes" ]];
+		then
+			read -p $"[+] Owner: " suowner
+			chmod -R ${suowner}:${suowner} ${dir}
+			echo -e "${green}[+] Success.${norm} Folder ${dir} changed to ${suowner}:${suowner}"
+		else
+			echo -e "${red}[-]${norm} Nothing? :("
+		fi
+	fi
 
 }
 

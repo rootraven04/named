@@ -103,17 +103,18 @@ _INSTALLAGC() {
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'"
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'"
 	echo -e "${blue}[~]${norm} Installing Plugin..."
-	php wp-cli.phar plugin install ${source_campaign} --activate
+		php wp-cli.phar plugin install ${source_campaign} --activate
 	#php wp-cli.phar cron event list $extra
 
-	php wp-cli.phar plugin install wordpress-importer --activate
-	wget ${xml_agc} -O agc.xml
-	php wp-cli.phar import agc.xml --authors=create
-	wget ${sql_agc} -O agc.sql
-	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
-	php wp-cli.phar db import agc.sql
-	php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator
-	echo -e "${green}[+] Username:${norm} ${username}"
+		php wp-cli.phar plugin install wordpress-importer --activate
+		wget ${xml_agc} -O agc.xml
+		php wp-cli.phar import agc.xml --authors=create &2>/dev/null
+		wget ${sql_agc} -O agc.sql
+		sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
+		php wp-cli.phar db import agc.sql &2>/dev/null
+		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator
+		echo -e "${green}[+] Username:${norm} ${username}"
+		php wp-cli.phar user list $extra
 }
 
 

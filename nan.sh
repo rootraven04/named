@@ -1,5 +1,5 @@
 #!/bin/bash 
-# Reina Saki v.0.1a
+# Reina Saki v.0.1
 
 
 #		---	Colors
@@ -158,6 +158,7 @@ echo -e "
 
     [1] Install Wordpress
     [2] Install AGC [Campaign]
+    [3] [Campaign] Health Check
 
  ===============================
 "
@@ -169,7 +170,7 @@ if [[ $option == "1" ]];
 elif [[ $option == "2" ]];
 	then
 		_INSTALLAGC
-elif [[ $option == "2" ]];
+elif [[ $option == "3" ]];
 	then
 		_CAMPAIGNCHECK
 elif [[ $option == "0" ]];

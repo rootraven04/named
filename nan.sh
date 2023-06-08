@@ -133,7 +133,7 @@ else
 fi
 
 
-
+rm -rf "wp-cli.phar"
 #	php wp-cli.phar db query "UPDATE wp_options SET option_value = '%postname%' WHERE option_name = 'permalink_structure'"
 
 

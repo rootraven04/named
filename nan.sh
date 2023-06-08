@@ -111,7 +111,7 @@ _INSTALLAGC() {
 		php wp-cli.phar user list $extra
 	echo -e "${blue}[~]${norm} Changing Permalinks"
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
-	echo -e "${green}[+] Dumping wp-cron-event-list"
+	echo -e "${green}[+] Dumping wp-cron-event-list${norm}"
 		php wp-cli.phar cron event list $extra
 
 }

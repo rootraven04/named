@@ -155,7 +155,7 @@ echo -ne "${blue}[~]${norm} Checking WP-CLI.phar is supported or not...\r" && sl
 curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 if [[ $(php wp-cli.phar $extra | grep "WP-CLI only works correctly from the command line") ]];
 then
-	echo -ne "${red}[!] Sorry,${norm} WP-CLI is not supported!                           \r" && exit
+	echo -ne "${red}[!] Sorry,${norm} WP-CLI is not supported!                             " && exit
 else
 	echo -ne "${green}[+] Congrats,${norm} WP-CLI is supported!                          \r" && sleep 0.8
 fi
@@ -193,11 +193,10 @@ echo -e "
 
 _help() {
 echo -e "
-   [REINA-SAKI] ------------------------
-
-   help                         Show this information.
-   clear                        Clear the terminal.
-   show options                 Show the menu for options
+   - help                         Show this information.
+   - clear                        Clear the terminal.
+   - show options                 Show the menu for options.
+   - <number>                     Select to running the number from the options [e.g: 3].
 
 "
 

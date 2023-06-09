@@ -5,6 +5,7 @@
 #		---	Colors
 red="\033[1;31m"
 green="\033[1;32m"
+yellow="\033[1;33m"
 blue="\033[1;34m"
 norm="\033[0m"
 
@@ -168,7 +169,8 @@ echo -e "
    ██║  ██║███████╗██║██║ ╚████║██║  ██║    ███████║██║  ██║██║  ██╗██║     ${green}VERSION 0.1.1${norm}
    ╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
 
-   ${red}[!] ${norm}Reina provides a command-line interface for many actions you might perform in the WordPress admin..
+   ${red}[!]${norm} Reina provides a command-line interface for many actions you might perform in the WordPress admin..
+   ${yellow}[i]${norm} Type 'help' for more information.
 "
 echo -e "
   ===============================
@@ -181,6 +183,12 @@ echo -e "
 "
 
 _help() {
+
+	echo -e "[REINA-SAKI] ------------------------"
+	echo -e ""
+	echo -e "  help                     Show this information."
+	echo -e "  clear                    Clear the terminal."
+
 
 }
 _command() {

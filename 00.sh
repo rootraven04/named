@@ -180,7 +180,7 @@ echo -e "
 _options() {
 echo -e "
   
-  REINA SAKI ${yellow}${version}
+  REINA SAKI ${yellow}${version}${norm}
   ----------------------------------
 
     [1] Install Wordpress

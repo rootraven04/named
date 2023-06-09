@@ -192,8 +192,8 @@ _help() {
 
 }
 _command() {
-	printf "\033[1;37m"
-	while IFS="" read -r -e -d $'\n' -p '[nobody@artem] >> ' option; do
+	printf "\033[0m"
+	while IFS="" read -r -e -d $'\n' -p '[reina-saki] >> ' option; do
 		history -s "$option"
 
 			if [[ $option == 'exit' ]]; then exit

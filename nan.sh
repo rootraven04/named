@@ -71,6 +71,8 @@ _INSTALLWP() {
 		fi
 	fi
 
+	rm -rf "wp-cli.phar"
+
 }
 
 
@@ -113,6 +115,8 @@ _INSTALLAGC() {
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
 	echo -e "${green}[+]${norm} Dumping wp-cron-event-list"
 		php wp-cli.phar cron event list $extra
+	rm -rf "agc.sql"
+	rm -rf "agc.xml" && rm -rf "wp-cli.phar"
 
 }
 
@@ -136,6 +140,7 @@ _CAMPAIGNCHECK() {
 		php wp-cli.phar post list --post_type=cricket --posts_per_page=5 $extra
 	echo -e "${blue}[~]${norm} Repairing post_name."
 		php wp-cli.phar db query "UPDATE $(php wp-cli.phar db prefix $extra)options SET option_value = '/%postname%/' WHERE option_name = 'permalink_structure'" $extra
+	rm -rf "wp-cli.phar"
 
 }
 
@@ -174,24 +179,45 @@ echo -e "
 
  ===============================
 "
-read -p $" : Select an option >> " option
 
-if [[ $option == "1" ]];
-	then
-		_INSTALLWP 
-elif [[ $option == "2" ]];
-	then
-		_INSTALLAGC
-elif [[ $option == "3" ]];
-	then
-		_CAMPAIGNCHECK
-elif [[ $option == "0" ]];
-	then
-		exit
-else
-	echo -e "Pilihen Goblok!"
-fi
+_help() {
+
+}
+_command() {
+	printf "\033[1;37m"
+	while IFS="" read -r -e -d $'\n' -p '[nobody@artem] >> ' option; do
+		history -s "$option"
+
+			if [[ $option == 'exit' ]]; then exit
+			elif [[ $option == 'clear' ]]; then clear
+			elif [[ $option == 'help' ]]; then help
+			elif [[ $option == '1' ]]; then _INSTALLWP
+			elif [[ $option == '2' ]]; then _INSTALLAGC
+			elif [[ $option == '3' ]]; then _CAMPAIGNCHECK
+			else command
+			fi
+	done
+}
+
+_command
+#read -p $" : Select an option >> " option
+
+#if [[ $option == "1" ]];
+#	then
+#		_INSTALLWP 
+#elif [[ $option == "2" ]];
+#	then
+#		_INSTALLAGC
+#elif [[ $option == "3" ]];
+#	then
+#		_CAMPAIGNCHECK
+#elif [[ $option == "0" ]];
+#	then
+#		exit
+#else
+#	echo -e "Pilihen Goblok!"
+#fi
 
 
-rm -rf "agc.sql"
-rm -rf "agc.xml" && rm -rf "wp-cli.phar"
+#rm -rf "agc.sql"
+#rm -rf "agc.xml" && rm -rf "wp-cli.phar"

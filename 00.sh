@@ -160,8 +160,6 @@ else
 	echo -ne "${green}[+] Congrats,${norm} WP-CLI is supported!                          \r" && sleep 0.8
 fi
 
-rm -rf "wp-cli.phar"
-
 echo -e "
 
 
@@ -217,16 +215,20 @@ echo -e "
    Edit command
    ============
    - edit user                    Edit user credentials from website.
+   - edit role                    Edit user credentials from website.
 
    - <number>                     Select to running the number from the options [e.g: 3].
 
- Wordpress Version
 "
 
 }
 
 _command() {
-	printf "\033[0m"
+	if [[ -f "$(pwd)/wp-cli.phar" ]]; then
+		printf "\033[31m[!]\033[0m WP-CLI.phar still exists."
+	else
+		printf "\033[0m"
+	fi
 	while IFS="" read -r -e -d $'\n' -p '[ REINA-SAKI ] >> ' option; do
 		history -s "$option"
 

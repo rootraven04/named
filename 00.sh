@@ -197,13 +197,14 @@ _user() {
 
 _edituser() {
 	echo -e ""
-	echo -ne "[+] Username      : " && read -p $"" oldusername 
+	echo -ne "[+] Username/ID   : " && read -p $"" oldusername 
 	echo -ne "[+] New Password  : " && read -p $"" newpassword
 
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar user update "${oldusername}" --user_pass="${newpassword}" && rm -rf "wp-cli.phar"
+
+	echo -e ""
 }
 _help() {
-curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 echo -e "
    
    Default command
@@ -221,7 +222,6 @@ echo -e "
 
  Wordpress Version
 "
-php wp-cli.phar find ./ && rm -rf "wp-cli.phar"
 
 }
 

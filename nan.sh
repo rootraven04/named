@@ -198,7 +198,7 @@ _command() {
 
 			if [[ $option == 'exit' ]]; then exit
 			elif [[ $option == 'clear' ]]; then clear
-			elif [[ $option == 'help' ]]; then help
+			elif [[ $option == 'help' ]]; then _help
 			elif [[ $option == '1' ]]; then _INSTALLWP
 			elif [[ $option == '2' ]]; then _INSTALLAGC
 			elif [[ $option == '3' ]]; then _CAMPAIGNCHECK

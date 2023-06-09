@@ -172,6 +172,8 @@ echo -e "
    ${red}[!]${norm} Reina provides a command-line interface for many actions you might perform in the WordPress admin..
    ${yellow}[i]${norm} Type 'help' for more information.
 "
+
+_options() {
 echo -e "
   ===============================
 
@@ -181,16 +183,20 @@ echo -e "
 
  ===============================
 "
+}
 
 _help() {
+echo -e "
+   [REINA-SAKI] ------------------------
 
-	echo -e "[REINA-SAKI] ------------------------"
-	echo -e ""
-	echo -e "  help                     Show this information."
-	echo -e "  clear                    Clear the terminal."
+   help                         Show this information.
+   clear                        Clear the terminal.
+   show options                 Show the menu for options
 
+"
 
 }
+
 _command() {
 	printf "\033[0m"
 	while IFS="" read -r -e -d $'\n' -p '[reina-saki] >> ' option; do
@@ -199,6 +205,7 @@ _command() {
 			if [[ $option == 'exit' ]]; then exit
 			elif [[ $option == 'clear' ]]; then clear
 			elif [[ $option == 'help' ]]; then _help
+			elif [[ $option == 'show options' ]]; then _options
 			elif [[ $option == '1' ]]; then _INSTALLWP
 			elif [[ $option == '2' ]]; then _INSTALLAGC
 			elif [[ $option == '3' ]]; then _CAMPAIGNCHECK
@@ -207,6 +214,7 @@ _command() {
 	done
 }
 
+_options
 _command
 #read -p $" : Select an option >> " option
 

@@ -160,6 +160,8 @@ else
 	echo -ne "${green}[+] Congrats,${norm} WP-CLI is supported!                          \r" && sleep 0.8
 fi
 
+rm -rf "wp-cli.phar"
+
 echo -e "
 
 
@@ -202,6 +204,15 @@ _edituser() {
 
 	echo -e ""
 }
+_editrole() {
+	echo -e ""
+	echo -ne "[+] Username/ID               : " && read -p $"" oldusername 
+	echo -ne "[+] subscriber/administrator  : " && read -p $"" newrole
+
+	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar user update "${oldusername}" --role="${newrole}" && rm -rf "wp-cli.phar"
+
+	echo -e ""
+}
 _help() {
 echo -e "
    
@@ -225,7 +236,7 @@ echo -e "
 
 _command() {
 	if [[ -f "$(pwd)/wp-cli.phar" ]]; then
-		printf "\033[31m[!]\033[0m WP-CLI.phar still exists."
+		printf "\033[31m[!]\033[0m"
 	else
 		printf "\033[0m"
 	fi
@@ -238,6 +249,7 @@ _command() {
 			elif [[ $option == 'show options' ]]; then _options
 			elif [[ $option == 'show user' ]]; then _user
 			elif [[ $option == 'edit user' ]]; then _edituser
+			elif [[ $option == 'edit role' ]]; then _editrole
 			elif [[ $option == '1' ]]; then _INSTALLWP
 			elif [[ $option == '2' ]]; then _INSTALLAGC
 			elif [[ $option == '3' ]]; then _CAMPAIGNCHECK

@@ -191,14 +191,37 @@ echo -e "
 "
 }
 
+_user() {
+	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar user list && rm -rf "wp-cli.phar"	
+}
+
+_edituser() {
+	echo -e ""
+	echo -ne "[+] Username      : " && read -p $"" oldusername 
+	echo -ne "[+] New Password  : " && read -p $"" newpassword
+
+	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar user update "${oldusername}" --user_pass="${newpassword}" && rm -rf "wp-cli.phar"
+}
 _help() {
+curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 echo -e "
+   
+   Default command
+   ===============
    - help                         Show this information.
    - clear                        Clear the terminal.
    - show options                 Show the menu for options.
+   - show user                    List all user in the wordpress.
+
+   Edit command
+   ============
+   - edit user                    Edit user credentials from website.
+
    - <number>                     Select to running the number from the options [e.g: 3].
 
+ Wordpress Version
 "
+php wp-cli.phar find ./ && rm -rf "wp-cli.phar"
 
 }
 
@@ -211,6 +234,8 @@ _command() {
 			elif [[ $option == 'clear' ]]; then clear
 			elif [[ $option == 'help' ]]; then _help
 			elif [[ $option == 'show options' ]]; then _options
+			elif [[ $option == 'show user' ]]; then _user
+			elif [[ $option == 'edit user' ]]; then _edituser
 			elif [[ $option == '1' ]]; then _INSTALLWP
 			elif [[ $option == '2' ]]; then _INSTALLAGC
 			elif [[ $option == '3' ]]; then _CAMPAIGNCHECK

@@ -205,7 +205,7 @@ echo -e "
 
 _command() {
 	printf "\033[0m"
-	while IFS="" read -r -e -d $'\n' -p '[reina-saki] >> ' option; do
+	while IFS="" read -r -e -d $'\n' -p '[ REINA-SAKI ] >> ' option; do
 		history -s "$option"
 
 			if [[ $option == 'exit' ]]; then exit

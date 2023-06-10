@@ -214,23 +214,23 @@ _editrole() {
 	echo -e ""
 }
 _help() {
-echo -e "
-   
-   Default command
-   ===============
-   - help                         Show this information.
-   - clear                        Clear the terminal.
-   - show options                 Show the menu for options.
-   - show user                    List all user in the wordpress.
-
-   Edit command
-   ============
-   - edit user                    Edit user credentials from website.
-   - edit role                    Edit user credentials from website.
-
-   - <number>                     Select to running the number from the options [e.g: 3].
-
-"
+	seperator=-----------------------
+	seperator=$seperator$seperator$seperator$seperator
+	TableWidth=120
+	rows="| %-25s| %-10s| %-52s|\n"
+	echo ""
+	echo -e "[~] Default command"
+	printf "+%.${TableWidth}s\n" "$seperator+"
+	printf "| %-25s| %-10s| %-52s|\n" "Default Command" "Function" "Description"
+	printf "+%.${TableWidth}s\n" "$seperator+"
+	printf "$rows" "- clear" "bash" "Showing All Modules."
+	printf "$rows" "- help" "bash" "Showing this information."
+	printf "$rows" "- exit" "bash" "Exit from Reina Saki."
+	printf "$rows" "- show options" "framework" "Show the menu for options."
+	printf "$rows" "- show user" "wp-cli" "Show all user of the current website."
+	printf "$rows" "- edit user" "wp-cli" "Edit user credentials [password] from website."
+	printf "$rows" "- edit role" "wp-cli" "Edit user credentials [role] from website."
+	printf "+%.${TableWidth}s\n" "$seperator+"
 
 }
 

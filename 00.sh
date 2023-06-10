@@ -228,6 +228,7 @@ _help() {
 	printf "$rows" "- clear" "bash" "Clear the terminal."
 	printf "$rows" "- help" "bash" "Showing this information."
 	printf "$rows" "- exit" "bash" "Exit from Reina Saki."
+	printf "$rows" "- install plugin <name>" "wp-cli" "Install plugin with [slug]."
 	printf "$rows" "- search plugin(s) <name>" "wp-cli" "Search official plugin with query."
 	printf "$rows" "- show options" "framework" "Show the menu for options."
 	printf "$rows" "- show user(s)" "wp-cli" "Show all users of the website."
@@ -252,6 +253,12 @@ _command() {
 			elif [[ $option == 'show options' ]]; then _options
 			elif [[ $option == 'show user'* ]]; then _user
 			elif [[ $option == 'show plugin'* ]]; then _plugin
+			elif [[ $option == 'install plugin'* ]];
+			then 
+
+				name=$(echo -e "$option" | awk '{print $3}')
+				curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar plugin install "${name}" --activate
+
 			elif [[ $option == 'search plugin'* ]];
 			then 
 

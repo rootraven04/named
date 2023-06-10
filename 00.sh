@@ -228,7 +228,7 @@ _help() {
 	printf "$rows" "- clear" "bash" "Clear the terminal."
 	printf "$rows" "- help" "bash" "Showing this information."
 	printf "$rows" "- exit" "bash" "Exit from Reina Saki."
-	printf "$rows" "- search plugin(s) <query>" "wp-cli" "Search official plugin with query."
+	printf "$rows" "- search plugin(s) <name>" "wp-cli" "Search official plugin with query."
 	printf "$rows" "- show options" "framework" "Show the menu for options."
 	printf "$rows" "- show user(s)" "wp-cli" "Show all users of the website."
 	printf "$rows" "- show plugin(s)" "wp-cli" "Show all plugins of the website."
@@ -254,7 +254,7 @@ _command() {
 			elif [[ $option == 'show plugin'* ]]; then _plugin
 			elif [[ $option == 'search plugin'* ]];
 			then 
-				
+
 				name=$(echo -e "$option" | awk '{print $3}')
 				curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar plugin search "${name}"
 

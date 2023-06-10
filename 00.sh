@@ -194,7 +194,9 @@ echo -e "
 _user() {
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar user list && rm -rf "wp-cli.phar"	
 }
-
+_plugin() {
+	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar plugin list && rm -rf "wp-cli.phar"	
+}
 _edituser() {
 	echo -e ""
 	echo -ne "[+] Username/ID   : " && read -p $"" oldusername 
@@ -218,8 +220,6 @@ _help() {
 	seperator=$seperator$seperator$seperator$seperator
 	TableWidth=120
 	rows="| %-25s| %-10s| %-52s|\n"
-	echo ""
-	echo -e "[~] Default command"
 	printf "+%.${TableWidth}s\n" "$seperator+"
 	printf "| %-25s| %-10s| %-52s|\n" "Default Command" "Function" "Description"
 	printf "+%.${TableWidth}s\n" "$seperator+"
@@ -227,7 +227,8 @@ _help() {
 	printf "$rows" "- help" "bash" "Showing this information."
 	printf "$rows" "- exit" "bash" "Exit from Reina Saki."
 	printf "$rows" "- show options" "framework" "Show the menu for options."
-	printf "$rows" "- show user" "wp-cli" "Show all user of the current website."
+	printf "$rows" "- show user(s)" "wp-cli" "Show all users of the website."
+	printf "$rows" "- show plugin(s)" "wp-cli" "Show all plugins of the website."
 	printf "$rows" "- edit user" "wp-cli" "Edit user credentials [password] from website."
 	printf "$rows" "- edit role" "wp-cli" "Edit user credentials [role] from website."
 	printf "+%.${TableWidth}s\n" "$seperator+"
@@ -247,7 +248,8 @@ _command() {
 			elif [[ $option == 'clear' ]]; then clear
 			elif [[ $option == 'help' ]]; then _help
 			elif [[ $option == 'show options' ]]; then _options
-			elif [[ $option == 'show user' ]]; then _user
+			elif [[ $option == 'show user'* ]]; then _user
+			elif [[ $option == 'show plugin'* ]]; then _plugin
 			elif [[ $option == 'edit user' ]]; then _edituser
 			elif [[ $option == 'edit role' ]]; then _editrole
 			elif [[ $option == '1' ]]; then _INSTALLWP

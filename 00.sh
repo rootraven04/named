@@ -198,6 +198,10 @@ _user() {
 _plugin() {
 	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar plugin list && rm -rf "wp-cli.phar"	
 }
+_searchplugin() {
+
+	curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar plugin list && rm -rf "wp-cli.phar"
+}
 _edituser() {
 	echo -e ""
 	echo -ne "[+] Username/ID   : " && read -p $"" oldusername 
@@ -224,13 +228,13 @@ _help() {
 	printf "$rows" "- clear" "bash" "Clear the terminal."
 	printf "$rows" "- help" "bash" "Showing this information."
 	printf "$rows" "- exit" "bash" "Exit from Reina Saki."
+	printf "$rows" "- search plugin(s) <query>" "wp-cli" "Search official plugin with query."
 	printf "$rows" "- show options" "framework" "Show the menu for options."
 	printf "$rows" "- show user(s)" "wp-cli" "Show all users of the website."
 	printf "$rows" "- show plugin(s)" "wp-cli" "Show all plugins of the website."
 	printf "$rows" "- edit user" "wp-cli" "Edit user credentials [password] from website."
 	printf "$rows" "- edit role" "wp-cli" "Edit user credentials [role] from website."
 	printf "+%.${TableWidth}s\n" "$seperator+"
-
 }
 
 _command() {
@@ -248,6 +252,12 @@ _command() {
 			elif [[ $option == 'show options' ]]; then _options
 			elif [[ $option == 'show user'* ]]; then _user
 			elif [[ $option == 'show plugin'* ]]; then _plugin
+			elif [[ $option == 'search plugin'* ]];
+			then 
+				
+				name=$(echo -e "$option" | awk '{print $3}')
+				curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && php wp-cli.phar plugin search "${name}"
+
 			elif [[ $option == 'edit user' ]]; then _edituser
 			elif [[ $option == 'edit role' ]]; then _editrole
 			elif [[ $option == '1' ]]; then _INSTALLWP
@@ -260,24 +270,9 @@ _command() {
 
 _options
 _command
-#read -p $" : Select an option >> " option
-
-#if [[ $option == "1" ]];
-#	then
-#		_INSTALLWP 
-#elif [[ $option == "2" ]];
-#	then
-#		_INSTALLAGC
-#elif [[ $option == "3" ]];
-#	then
-#		_CAMPAIGNCHECK
-#elif [[ $option == "0" ]];
-#	then
-#		exit
-#else
-#	echo -e "Pilihen Goblok!"
-#fi
-
 
 #rm -rf "agc.sql"
 #rm -rf "agc.xml" && rm -rf "wp-cli.phar"
+#	php wp-cli.phar plugin search "yoast"
+#	name="yoast";php wp-cli.phar plugin search "${name}"
+#	

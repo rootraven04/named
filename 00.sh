@@ -6,6 +6,9 @@
 
 #	GLOBAL
 version="VERSION 0.1.1"
+seperator=-----------------------
+seperator=$seperator$seperator$seperator$seperator
+TableWidth=120
 
 red="\033[1;31m"
 green="\033[1;32m"
@@ -16,6 +19,7 @@ norm="\033[0m"
 source_campaign="http://198.148.116.171/666/xAGCx/campaign.zip"
 xml_agc="http://198.148.116.171/666/xAGCx/agc-india.xml"
 sql_agc="http://198.148.116.171/666/xAGCx/agc.txt"
+
 owner=$(echo -e "$(pwd)" | cut -d "/" -f3)
 if [[ $(id | grep "root" ) ]]; then extra="--allow-root"; else extra=""; fi
 
@@ -178,17 +182,14 @@ echo -e "
 "
 
 _options() {
-echo -e "
-  
-  REINA SAKI ${yellow}${version}${norm}
-  ----------------------------------
-
-    [1] Install Wordpress
-    [2] Install AGC [Campaign]
-    [3] [Campaign] Health Check
-
-  ----------------------------------
-"
+	rows="| %-5s| %-30s| %-52s|\n"
+	printf "+%.${TableWidth}s\n" "$seperator+"
+	printf "| %-5s| %-30s| %-52s|\n" "NO" "Name" "Description"
+	printf "+%.${TableWidth}s\n" "$seperator+"
+	printf "$rows" "1." "Install Wordpress" "Install wordpress to this server."
+	printf "$rows" "2." "Install AGC [campaign]" "Istall AGC to this server."
+	printf "$rows" "3." "Health Check [campaign]" "Check table,cron,post from AGC."
+	printf "+%.${TableWidth}s\n" "$seperator+"
 }
 
 _user() {
@@ -216,14 +217,11 @@ _editrole() {
 	echo -e ""
 }
 _help() {
-	seperator=-----------------------
-	seperator=$seperator$seperator$seperator$seperator
-	TableWidth=120
 	rows="| %-25s| %-10s| %-52s|\n"
 	printf "+%.${TableWidth}s\n" "$seperator+"
 	printf "| %-25s| %-10s| %-52s|\n" "Default Command" "Function" "Description"
 	printf "+%.${TableWidth}s\n" "$seperator+"
-	printf "$rows" "- clear" "bash" "Showing All Modules."
+	printf "$rows" "- clear" "bash" "Clear the terminal."
 	printf "$rows" "- help" "bash" "Showing this information."
 	printf "$rows" "- exit" "bash" "Exit from Reina Saki."
 	printf "$rows" "- show options" "framework" "Show the menu for options."
